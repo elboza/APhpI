@@ -65,7 +65,15 @@ class APhpI{
 					//exec fn(event)
 					$response=$item['fn']($event);
 					//send response...
-					
+
+					if(isset($response['statusCode']))http_response_code($response['statusCode']);
+					if(isset($response['headers'])){
+						foreach($response['headers'] as $k=>$v){
+							header("${k}: ${v}");
+						}
+					}
+					if(isset($response['body'])) echo $response['body'];
+
 					//break;
 					return;
 				}

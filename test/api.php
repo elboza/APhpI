@@ -8,9 +8,14 @@ $api=new APhpI;
 //$api->test();
 
 $api->add_route('get','/info/:ppp/kk/:a', function($event) {
-	echo "ciao info...";
-	var_dump($event);
-	return "pp_return";
+
+	return array(
+		'statusCode'=>400,
+		'headers'=> array(
+			'Content-type'=>'application/json'
+		),
+		'body'=>var_export($event, true)
+	);
 });
 
 $api->run();
