@@ -9,6 +9,7 @@ $api=new APhpI;
 
 $api->add_route('get','/info/:ppp/kk/:a', function($event) {
 
+	pippo();
 	return array(
 		'statusCode'=>400,
 		'headers'=> array(
