@@ -5,6 +5,8 @@ use APhpi\APhpi;
 
 $api=new APhpI;
 
+$api->set_debug_true();
+
 //$api->test();
 
 $api->add_route('get','/info/:ppp/kk/:a', function($event) {

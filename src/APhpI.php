@@ -30,12 +30,20 @@ class APhpI{
 		var_dump($input);
 	}
 
-	public function set_debug($debug) {
-		$this->DEBUG=$debug);
+	public function set_debug_true() {
+		$this->DEBUG=TRUE;
 	}
 
-	public function set_verbose($verbose){
-		$this->VERBOSE=$verbose;
+	public function set_debug_false() {
+		$this->DEBUG=FALSE;
+	}
+
+	public function set_verbose_true(){
+		$this->VERBOSE=TRUE;
+	}
+
+	public function set_verbose_false(){
+		$this->VERBOSE=FALSE;
 	}
 
 	public function exception_error_handler( $severity, $message, $file, $line ) 
