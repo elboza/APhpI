@@ -1,5 +1,5 @@
 {
-    "name": "aphpi/aphpi",
+    "name": "aphpi-core/aphpi",
     "description": "a micro PHP API router framework",
     "license": "Beerware",
     "authors": [
