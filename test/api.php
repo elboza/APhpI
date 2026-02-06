@@ -1,12 +1,12 @@
 <?php
 
 require '../src/APhpI.php';
-use APhpi\APhpi;
+use APhpI\APhpI;
 
+APhpI::set_error_handling_env("dev");
 $api=new APhpI;
 
 $api->set_debug_true();
-
 //$api->test();
 
 $api->add_route('get','/info', function($event) {
@@ -15,7 +15,8 @@ $api->add_route('get','/info', function($event) {
 		'headers'=> array(
 			'Content-type'=>'application/json'
 		),
-		'body'=>var_export($event, true)
+		//'body'=>var_export($event, true)
+		'body'=>json_encode($event, JSON_UNESCAPED_SLASHES)
 	);
 });
 

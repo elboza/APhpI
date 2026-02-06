@@ -4,6 +4,8 @@ VENDORDIR=vendor
 LOCAL_SERVER=localhost
 PORT=3000
 
+all: help
+
 clean:
 	rm -rf ${DISTDIR}
 p_cfg:

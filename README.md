@@ -1,16 +1,20 @@
 # APhpI
+
 ## a micro PHP API router framework
 
 ### api example
+
 ```php
 <?php
 
 require '../src/APhpI.php';
-use APhpi\APhpi;
+use APhpI\APhpI;
 
+// set verbose error reports ...
+APhpI::set_error_handling_env("dev");
+
+// init API router ...
 $api=new APhpI;
-
-$api->set_debug_true();
 
 $api->add_route('get','/info', function($event) {
 	return array(
@@ -50,11 +54,13 @@ $api->run();
 ```
 
 ### run test server
+
 ```sh
 make run_dev
 ```
 
 ### exmaple test
+
 ```sh
 ~ % curl http://localhost:3000/api.php/echo -X POST -d 'foo' -i
 HTTP/1.1 200 OK
@@ -69,28 +75,12 @@ foo
 ~ % curl http://localhost:3000/api.php/info -i
 HTTP/1.1 200 OK
 Host: localhost:3000
-Date: Mon, 28 Oct 2019 17:06:35 +0000
+Date: Fri, 06 Feb 2026 21:49:14 GMT
 Connection: close
-X-Powered-By: PHP/7.1.23
+X-Powered-By: PHP/8.5.2
 Content-type: application/json
 
-array (
-  'headers' =>
-  array (
-    'Host' => 'localhost:3000',
-    'User-Agent' => 'curl/7.54.0',
-    'Accept' => '*/*',
-  ),
-  'get_params' =>
-  array (
-  ),
-  'url_params' =>
-  array (
-  ),
-  'body' => '',
-  'method' => 'GET',
-  'request_path' => '/info',
-)
+{"headers":{"Host":"localhost:3000","User-Agent":"curl/8.18.0","Accept":"*/*"},"get_params":[],"url_params":[],"body":"","method":"GET","request_path":"/info"}
 
 ~ % curl http://localhost:3000/api.php/user -i
 HTTP/1.1 200 OK

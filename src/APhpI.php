@@ -1,14 +1,16 @@
 <?php
-namespace APhPI;
+namespace APhpI;
+require 'bootstrap.php';
+//set_error_handling_env("prd");
+//set_error_handling_env("dev");
+
 class APhpI{
 	private $routes = array();
+	private $method, $request, $request_path, $input, $get_params, $headers;
+	private $DEBUG, $VERBOSE;
 	function __construct() {
 		$this->DEBUG=FALSE;
 		$this->VERBOSE=FALSE;
-		ini_set( 'display_errors', 0 );
-		set_error_handler(array($this, 'exception_error_handler'));
-		//set_exception_handler(array($this, 'exception_error_handler'));
-		register_shutdown_function(array($this, 'fatal_error_shutdown'));
 		$this->method=$_SERVER['REQUEST_METHOD'];
 		$this->request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 		$this->request_path = $_SERVER['PATH_INFO'];
@@ -16,6 +18,10 @@ class APhpI{
 		$this->input = file_get_contents('php://input');
 		$this->get_params=$_GET;
 		$this->headers=getallheaders();
+	}
+
+	public static function set_error_handling_env($env){
+		\set_error_handling_env($env);
 	}
 
 	public function test(){
@@ -44,38 +50,6 @@ class APhpI{
 
 	public function set_verbose_false(){
 		$this->VERBOSE=FALSE;
-	}
-
-	public function exception_error_handler( $severity, $message, $file, $line ) 
-	{
-    if ( !( error_reporting() & $severity ) ) {
-        // This error code is not included in error_reporting
-    	echo "pippo1";
-        return;
-    }
-
-    // code for handling errors
-    if($this->DEBUG) header('Content-Type: application/json; charset=utf-8');
-    if($this->DEBUG){
-    	if($this->VERBOSE){
-    		echo json_encode(array(
-          'error' => ['code'=>$severity, 'msg'=>$message, 'file'=>$file, 'line'=>$line]
-         ));
-    		exit;
-    	}
-    	echo json_encode(array(
-          'error' => $message
-         ));
-    		exit;
-    }
-    echo "INTERNAL SERVER ERROR";
-	}
-
-	public function fatal_error_shutdown() 
-	{
-    $last_error = error_get_last();
-    if ( error_reporting() & $last_error['type'] )
-        call_user_func_array( array($this,'exception_error_handler'), $last_error );
 	}
 
 	public function add_route($method, $path, $function) {
@@ -134,6 +108,7 @@ class APhpI{
 			}
 		}
 		//send not found...
-		echo "404 not found";
+		http_response_code(404);
+		echo "Not found";
 	}
 }
